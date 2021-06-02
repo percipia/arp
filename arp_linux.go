@@ -35,7 +35,7 @@ func Table() ArpTable {
 		line := s.Text()
 		fields := strings.Fields(line)
 		if fields[f_Flags] == "0x2" || fields[f_Flags] == "0x6" {
-			table[fields[f_IPAddr]] = fields[f_HWAddr]
+			table[fields[f_IPAddr]] = normalizeMACAddr(fields[f_HWAddr])
 		}
 	}
 
