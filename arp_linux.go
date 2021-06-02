@@ -34,7 +34,9 @@ func Table() ArpTable {
 	for s.Scan() {
 		line := s.Text()
 		fields := strings.Fields(line)
-		table[fields[f_IPAddr]] = fields[f_HWAddr]
+		if fields[f_Flags] == "0x2" || fields[f_Flags] == "0x6" {
+			table[fields[f_IPAddr]] = fields[f_HWAddr]
+		}
 	}
 
 	return table
