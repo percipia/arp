@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/mostlygeek/arp"
+
+	"../../arp"
 )
 
 func main() {

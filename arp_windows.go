@@ -9,10 +9,13 @@ package arp
 import (
 	"os/exec"
 	"strings"
+	"syscall"
 )
 
 func Table() ArpTable {
-	data, err := exec.Command("arp", "-a").Output()
+	cmd := exec.Command("arp", "-a")
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	data, err := cmd.Output()
 	if err != nil {
 		return nil
 	}
@@ -42,7 +45,7 @@ func Table() ArpTable {
 
 		ip := fields[0]
 		// Normalize MAC address to colon-separated format
-		table[ip] = strings.Replace(fields[1], "-", ":", -1)
+		table[ip] = normalizeMACAddr(fields[1])
 	}
 
 	return table
